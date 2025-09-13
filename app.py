@@ -14,181 +14,136 @@ def scrape_queens_dining_menu(dining_hall, day, meal):
     
     # Initialize the driver
     driver = webdriver.Chrome(options=options)
-    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
     
     try:
         # Navigate to the page
         url = 'https://www.queensu.ca/food/eat-now/todays-menu'
-        print("Loading page...")
+        print("Loading Queens University dining menu...")
         driver.get(url)
         
-        # STEP 0: HANDLE THE POPUP/COOKIE CONSENT
-        print("Checking for popup...")
-        time.sleep(2)  # Wait for popup to appear
-        
-        # Try to find and click common consent buttons
-        consent_selectors = [
-            "button#acceptCookies",
-            "button.accept-cookies",
-            "button.cookie-accept",
-            "button.btn-accept",
-            "button.agree-button",
-            "button[aria-label*='accept']",
-            "button[aria-label*='agree']",
-            "button:contains('Accept')",
-            "button:contains('Agree')",
-            "button:contains('OK')",
-            "button:contains('Okay')",
-        ]
-        
-        popup_closed = False
-        for selector in consent_selectors:
-            try:
-                # Try CSS selector first
-                consent_button = driver.find_element(By.CSS_SELECTOR, selector)
-                if consent_button.is_displayed():
-                    consent_button.click()
-                    print("Closed popup/consent dialog")
-                    popup_closed = True
-                    break
-            except:
-                continue
-        
-        # If CSS selectors didn't work, try XPath for text content
-        if not popup_closed:
-            xpath_selectors = [
-                "//button[contains(text(), 'Accept')]",
-                "//button[contains(text(), 'Agree')]",
-                "//button[contains(text(), 'OK')]",
-                "//button[contains(text(), 'Okay')]",
-                "//button[contains(text(), 'I agree')]",
-                "//button[contains(., 'Accept')]",
-            ]
-            
-            for xpath in xpath_selectors:
-                try:
-                    consent_button = driver.find_element(By.XPATH, xpath)
-                    if consent_button.is_displayed():
-                        consent_button.click()
-                        print("Closed popup/consent dialog using XPath")
-                        popup_closed = True
-                        break
-                except:
-                    continue
-        
-        if not popup_closed:
-            print("No popup found or couldn't close it - proceeding anyway")
-        
-        time.sleep(1)  # Wait for popup to disappear
-        
-        # Wait for page content to load
+        # Wait for page to load completely
         WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.CLASS_NAME, "menu-filter"))
         )
-        time.sleep(2)  # Additional time for JavaScript to fully load
+        time.sleep(2)
         
-        # STEP 1: SELECT DINING HALL (this makes dates appear)
-        print("Selecting dining hall...")
-        # Find all dining hall options
-        hall_options = driver.find_elements(By.CSS_SELECTOR, ".dining-hall-options label, .dining-hall-options input, [data-hall-option]")
+        print("Page loaded successfully")
         
-        # If no options found with those selectors, try more general approach
-        if not hall_options:
-            hall_options = driver.find_elements(By.CSS_SELECTOR, "input[type='radio'][name*='hall'], label[for*='hall']")
+        # STEP 1: SELECT DINING HALL
+        print(f"Selecting dining hall: {dining_hall}")
         
-        # Click the correct dining hall
+        # Find all dining hall radio buttons
+        hall_options = driver.find_elements(By.CSS_SELECTOR, "input[type='radio'][name='dining_hall']")
+        hall_labels = driver.find_elements(By.CSS_SELECTOR, "label[for^='edit-dining-hall']")
+        
         hall_found = False
-        for option in hall_options:
-            option_text = option.text.strip() or option.get_attribute("value") or option.get_attribute("id") or ""
-            if dining_hall.lower() in option_text.lower():
-                option.click()
-                print(f"Selected dining hall: {dining_hall}")
+        for i, option in enumerate(hall_options):
+            label = hall_labels[i] if i < len(hall_labels) else None
+            label_text = label.text.strip() if label else ""
+            
+            if dining_hall.lower() in label_text.lower():
+                # Scroll into view and click the label (more reliable than clicking input)
+                driver.execute_script("arguments[0].scrollIntoView();", label)
+                label.click()
+                print(f"Selected: {label_text}")
                 hall_found = True
                 break
         
         if not hall_found:
-            print(f"Dining hall '{dining_hall}' not found. Available options:")
-            for option in hall_options:
-                option_text = option.text.strip() or option.get_attribute("value") or option.get_attribute("id") or "N/A"
-                if option_text and option_text != "N/A":
-                    print(f" - {option_text}")
+            print("Available dining halls:")
+            for label in hall_labels:
+                print(f" - {label.text.strip()}")
             return []
         
-        time.sleep(2)  # Wait for date options to appear
+        time.sleep(2)  # Wait for date options to load
         
-        # STEP 2: SELECT DAY (this makes meals appear)
-        print("Selecting day...")
-        # Wait for day options to become available
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, ".day-selector button, [data-day-selector] button, button[data-day]"))
-        )
+        # STEP 2: SELECT DATE
+        print(f"Selecting date: {day}")
         
-        # Find day selection buttons
-        day_buttons = driver.find_elements(By.CSS_SELECTOR, ".day-selector button, [data-day-selector] button, button[data-day]")
+        # Find date buttons (they're actually anchor tags with role='button')
+        date_buttons = driver.find_elements(By.CSS_SELECTOR, "a.menu-filter__day[role='button']")
         
-        # Click the correct day
-        day_found = False
-        for button in day_buttons:
+        date_found = False
+        for button in date_buttons:
             if day in button.text:
+                driver.execute_script("arguments[0].scrollIntoView();", button)
                 button.click()
-                print(f"Selected day: {day}")
-                day_found = True
+                print(f"Selected date: {button.text}")
+                date_found = True
                 break
         
-        if not day_found:
-            print(f"Day '{day}' not found. Available options:")
-            for button in day_buttons:
+        if not date_found:
+            print("Available dates:")
+            for button in date_buttons:
                 print(f" - {button.text}")
             return []
         
-        time.sleep(2)  # Wait for meal options to appear
+        time.sleep(2)  # Wait for meal options to load
         
-        # STEP 3: SELECT MEAL (this makes food items appear)
-        print("Selecting meal...")
-        # Wait for meal options to become available
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, ".meal-selector button, [data-meal-selector] button, button[data-meal]"))
-        )
+        # STEP 3: SELECT MEAL
+        print(f"Selecting meal: {meal}")
         
-        # Find meal selection buttons
-        meal_buttons = driver.find_elements(By.CSS_SELECTOR, ".meal-selector button, [data-meal-selector] button, button[data-meal]")
+        # Find meal buttons (also anchor tags with role='button')
+        meal_buttons = driver.find_elements(By.CSS_SELECTOR, "a.menu-filter__meal[role='button']")
         
-        # Click the correct meal
         meal_found = False
         for button in meal_buttons:
-            if meal in button.text:
+            if meal.lower() in button.text.lower():
+                driver.execute_script("arguments[0].scrollIntoView();", button)
                 button.click()
-                print(f"Selected meal: {meal}")
+                print(f"Selected meal: {button.text}")
                 meal_found = True
                 break
         
         if not meal_found:
-            print(f"Meal '{meal}' not found. Available options:")
+            print("Available meals:")
             for button in meal_buttons:
                 print(f" - {button.text}")
             return []
         
-        time.sleep(3)  # Wait for menu items to load
+        time.sleep(3)  # Wait for menu to load
         
         # STEP 4: EXTRACT MENU ITEMS
         print("Extracting menu items...")
-        # Wait for menu items to appear
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CLASS_NAME, "menu-item"))
-        )
         
-        menu_items = driver.find_elements(By.CLASS_NAME, "menu-item")
+        # Find menu sections (stations)
+        menu_sections = driver.find_elements(By.CSS_SELECTOR, ".menu-section")
+        menu_data = []
         
-        # If no menu items found with that class, try other common selectors
-        if not menu_items:
-            menu_items = driver.find_elements(By.CSS_SELECTOR, ".food-item, .menu-list li, [data-menu-item]")
+        if menu_sections:
+            for section in menu_sections:
+                try:
+                    # Get section title
+                    section_title = section.find_element(By.CSS_SELECTOR, ".menu-section__title").text
+                    print(f"\n{section_title}:")
+                    
+                    # Get menu items in this section
+                    menu_items = section.find_elements(By.CSS_SELECTOR, ".menu-item")
+                    
+                    for item in menu_items:
+                        try:
+                            item_name = item.find_element(By.CSS_SELECTOR, ".menu-item__name").text
+                            menu_data.append(f"{section_title}: {item_name}")
+                            print(f"  - {item_name}")
+                        except:
+                            # Try alternative selector if the first one fails
+                            item_name = item.text.strip()
+                            if item_name:
+                                menu_data.append(f"{section_title}: {item_name}")
+                                print(f"  - {item_name}")
+                except:
+                    continue
+        else:
+            # Fallback: try to find any menu items
+            print("No menu sections found, trying fallback...")
+            menu_items = driver.find_elements(By.CSS_SELECTOR, ".menu-item, .field--name-field-menu-items")
+            for item in menu_items:
+                item_text = item.text.strip()
+                if item_text:
+                    menu_data.append(item_text)
+                    print(f"- {item_text}")
         
-        # Print the results
-        print(f"\n--- {dining_hall} - {day} - {meal} ---")
-        for item in menu_items:
-            print(f"- {item.text}")
-            
-        return [item.text for item in menu_items]
+        return menu_data
         
     except TimeoutException:
         print("Page took too long to load. Please check your internet connection.")
@@ -198,24 +153,65 @@ def scrape_queens_dining_menu(dining_hall, day, meal):
         return []
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
+        import traceback
+        traceback.print_exc()
         return []
         
     finally:
         driver.quit()
 
+def get_available_options():
+    """Function to check what options are available on the site"""
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")  # Run in background
+    driver = webdriver.Chrome(options=options)
+    
+    try:
+        driver.get('https://www.queensu.ca/food/eat-now/todays-menu')
+        time.sleep(3)
+        
+        print("=== AVAILABLE DINING HALLS ===")
+        hall_labels = driver.find_elements(By.CSS_SELECTOR, "label[for^='edit-dining-hall']")
+        for label in hall_labels:
+            print(f"- {label.text.strip()}")
+        
+        print("\n=== AVAILABLE DATES ===")
+        date_buttons = driver.find_elements(By.CSS_SELECTOR, "a.menu-filter__day[role='button']")
+        for button in date_buttons[:5]:  # Show first 5 dates
+            print(f"- {button.text}")
+        
+        print("\n=== AVAILABLE MEALS ===")
+        meal_buttons = driver.find_elements(By.CSS_SELECTOR, "a.menu-filter__meal[role='button']")
+        for button in meal_buttons:
+            print(f"- {button.text}")
+            
+    finally:
+        driver.quit()
+
 # Example usage
 if __name__ == "__main__":
-    # You can change these parameters as needed
-    dining_hall = "Ban Righ Hall"
-    day = "Fri, Sep 12"
-    meal = "Lunch"
+    # First, check what options are available
+    print("Checking available options on the site...")
+    get_available_options()
     
+    print("\n" + "="*50)
+    
+    # Then try to scrape with specific selections
+    # Note: Use exact names as shown in the available options
+    dining_hall = "Ban Righ Hall"  # Make sure this matches exactly
+    day = "Fri, Sep 13"  # Use a date that's actually available
+    meal = "Lunch"  # Use exact meal name
+    
+    print(f"Scraping menu for: {dining_hall} - {day} - {meal}")
     menu_items = scrape_queens_dining_menu(dining_hall, day, meal)
     
-    if not menu_items:
-        print("\nNo menu items found. This could be because:")
-        print("1. The dining hall is closed on that day/meal")
-        print("2. The website structure has changed")
-        print("3. There was a connection issue")
-        print("4. The selected options weren't available in the expected order")
-        print("5. The popup wasn't properly dismissed")
+    if menu_items:
+        print(f"\n✅ Success! Retrieved {len(menu_items)} menu items:")
+        for item in menu_items:
+            print(f"  {item}")
+    else:
+        print("\n❌ No menu items found. Possible reasons:")
+        print("   - The dining hall might be closed on that day")
+        print("   - The meal might not be served")
+        print("   - Check the exact spelling of options using the available options above")
+        print("   - Try a different date or meal")
