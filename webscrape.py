@@ -7,6 +7,7 @@ from selenium_stealth import stealth
 from datetime import datetime
 import time
 import json
+import re
 
 def setup_stealth_driver():
     """Set up Chrome driver with stealth settings"""
@@ -34,187 +35,273 @@ def handle_cookie_popup(driver):
     """Handle the cookie consent popup"""
     print("Checking for cookie popup...")
     try:
-        # Wait for cookie popup to appear
-        cookie_popup = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, "QUURcookieDisclosureDiv"))
-        )
-        
-        # Try to find and click accept button
-        accept_buttons = driver.find_elements(By.XPATH, "//button[contains(text(), 'Accept') or contains(text(), 'Agree') or contains(@aria-label, 'accept')]")
-        
-        for button in accept_buttons:
-            if button.is_displayed():
-                driver.execute_script("arguments[0].click();", button)
-                print("Cookie popup accepted")
-                time.sleep(1)
-                return True
-                
-    except Exception as e:
-        print(f"No cookie popup found or couldn't close it: {e}")
-    
-    return False
-
-def extract_detailed_menu(driver):
-    """Extract detailed menu information"""
-    print("Extracting menu information...")
-    
-    menu_data = {
-        'stations': [],
-        'express_meals': [],
-        'regular_menu': []
-    }
-    
-    try:
-        # Get all text content first
-        body_text = driver.find_element(By.TAG_NAME, "body").text
-        lines = body_text.split('\n')
-        
-        # Look for menu items (lines with calories or food keywords)
-        food_keywords = ['chicken', 'tofu', 'rice', 'vegetable', 'salad', 'soup', 'pasta', 'beef', 'fish', 'potato', 'cheese']
-        
-        for line in lines:
-            line = line.strip()
-            if line and ('cal' in line.lower() or any(keyword in line.lower() for keyword in food_keywords)):
-                item_data = parse_food_item(line)
-                if item_data:
-                    if 'express' in line.lower() or 'cash' in line.lower():
-                        menu_data['express_meals'].append(item_data)
-                    else:
-                        menu_data['regular_menu'].append(item_data)
-        
-        # Also look for station headers
-        station_keywords = ['entree', 'vegan', 'breakfast', 'lunch', 'dinner', 'meal', 'station']
-        for line in lines:
-            line = line.strip()
-            if line and any(keyword in line.lower() for keyword in station_keywords) and len(line) < 50:
-                menu_data['stations'].append(line)
-                
-    except Exception as e:
-        print(f"Error extracting menu: {e}")
-    
-    return menu_data
-
-def parse_food_item(text):
-    """Parse food item text into structured data"""
-    try:
-        # Clean the text
-        text = text.replace('*', '').replace('®', '').strip()
-        
-        # Extract calories
-        calories = None
-        if '(' in text and 'cal' in text:
-            calorie_part = text.split('(')[1].split(')')[0]
-            if 'cal' in calorie_part:
-                try:
-                    calories = int(''.join(filter(str.isdigit, calorie_part.split('cal')[0])))
-                except:
-                    calories = calorie_part.split('cal')[0].strip()
-        
-        # Extract name (remove calorie part)
-        name = text
-        if '(' in text and 'cal' in text:
-            name = text.split('(')[0].strip()
-        
-        # Extract description (anything after commas or special chars)
-        description = None
-        if ',' in text and len(text) > len(name) + 10:
-            description = text[text.find(name) + len(name):].strip()
-            if description.startswith(','):
-                description = description[1:].strip()
-            if description and '(' in description and 'cal' in description:
-                description = description.split('(')[0].strip()
-        
-        return {
-            'name': name,
-            'calories': calories,
-            'description': description,
-            'full_text': text
-        }
-        
-    except:
-        return None
-
-def click_element_safely(driver, element_type, value):
-    """Safely click an element with multiple strategies"""
-    try:
-        # Try different selectors
-        selectors = [
-            f"//*[contains(text(), '{value}')]",
-            f"//*[contains(@aria-label, '{value}')]",
-            f"//*[contains(@value, '{value}')]",
-            f"//*[contains(@class, '{value.lower().replace(' ', '-')}')]",
-            f"//*[contains(@id, '{value.lower().replace(' ', '-')}')]"
+        # Try multiple selectors for cookie popup
+        cookie_selectors = [
+            "//div[contains(@id, 'cookie')]",
+            "//div[contains(@class, 'cookie')]",
+            "//div[contains(@id, 'QUURcookie')]",
+            "//button[contains(text(), 'Accept')]",
+            "//button[contains(text(), 'Agree')]",
+            "//button[contains(@aria-label, 'accept')]"
         ]
         
-        for selector in selectors:
+        for selector in cookie_selectors:
             try:
                 elements = driver.find_elements(By.XPATH, selector)
                 for element in elements:
                     if element.is_displayed():
-                        driver.execute_script("arguments[0].scrollIntoView();", element)
-                        time.sleep(0.5)
                         driver.execute_script("arguments[0].click();", element)
-                        print(f"Clicked {element_type}: {value}")
-                        time.sleep(2)
+                        print("Cookie popup handled")
+                        time.sleep(1)
                         return True
             except:
                 continue
                 
     except Exception as e:
-        print(f"Could not click {element_type}: {e}")
+        print(f"Cookie handling: {e}")
     
     return False
 
-def scrape_complete_menu(dining_hall, day, meal):
-    """Scrape the complete menu with detailed information"""
+def make_selection(driver, element_type, value):
+    """Make a selection on the page (dining hall, date, or meal)"""
+    print(f"Selecting {element_type}: {value}")
+    
+    # Map element types to their container classes
+    container_classes = {
+        'dining_hall': 'diningHallBtn',
+        'date': 'selDate',
+        'meal': 'mealPeriod'
+    }
+    
+    try:
+        # Try to find the element by text content
+        xpath = f"//*[contains(text(), '{value}') and not(ancestor::*[contains(@style, 'display: none')])]"
+        elements = driver.find_elements(By.XPATH, xpath)
+        
+        for element in elements:
+            if element.is_displayed() and element.text.strip() == value:
+                driver.execute_script("arguments[0].scrollIntoView();", element)
+                driver.execute_script("arguments[0].click();", element)
+                print(f"✓ Selected {element_type}: {value}")
+                time.sleep(2)
+                return True
+        
+        # If not found by exact text, try partial match
+        xpath_partial = f"//*[contains(text(), '{value}')]"
+        elements_partial = driver.find_elements(By.XPATH, xpath_partial)
+        
+        for element in elements_partial:
+            if element.is_displayed() and value in element.text:
+                driver.execute_script("arguments[0].scrollIntoView();", element)
+                driver.execute_script("arguments[0].click();", element)
+                print(f"✓ Selected {element_type} (partial match): {value}")
+                time.sleep(2)
+                return True
+                
+    except Exception as e:
+        print(f"Error selecting {element_type}: {e}")
+    
+    print(f"✗ Could not find {element_type}: {value}")
+    return False
+
+def wait_for_menu_load(driver):
+    """Wait for the menu content to load after selections"""
+    print("Waiting for menu to load...")
+    
+    # Wait for menu container to appear
+    try:
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "menu-container"))
+        )
+        return True
+    except:
+        pass
+    
+    # Wait for menu items to appear
+    try:
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "menu-item"))
+        )
+        return True
+    except:
+        pass
+    
+    # Wait for any content that looks like a menu
+    try:
+        WebDriverWait(driver, 10).until(
+            lambda d: any(keyword in d.page_source.lower() for keyword in ['menu', 'cal', 'entree', 'vegan'])
+        )
+        return True
+    except:
+        pass
+    
+    print("Menu content did not load as expected")
+    return False
+
+def extract_menu_content(driver):
+    """Extract the actual menu content after selections"""
+    print("Extracting menu content...")
+    
+    menu_data = {
+        'stations': [],
+        'items': [],
+        'express_meals': [],
+        'nutritional_info': []
+    }
+    
+    try:
+        # Look for menu containers
+        menu_containers = driver.find_elements(By.XPATH, "//*[contains(@class, 'menu') or contains(@class, 'station') or contains(@class, 'item')]")
+        
+        # Get all text content from the page
+        body_text = driver.find_element(By.TAG_NAME, "body").text
+        lines = [line.strip() for line in body_text.split('\n') if line.strip()]
+        
+        # Filter for menu content (remove navigation, headers, etc.)
+        menu_lines = []
+        in_menu_section = False
+        
+        for line in lines:
+            # Start capturing when we hit menu-related content
+            if any(keyword in line.lower() for keyword in ['scheduled menu', 'express meals', 'entree', 'vegan', 'breakfast', 'lunch', 'dinner', 'cal']):
+                in_menu_section = True
+            
+            # Stop capturing when we hit footer content
+            if any(keyword in line.lower() for keyword in ['queen\'s university', 'copyright', 'privacy', 'tel:', 'footer']):
+                in_menu_section = False
+            
+            if in_menu_section and line and len(line) > 3:
+                menu_lines.append(line)
+        
+        # Process menu lines to extract structured data
+        current_station = ""
+        for line in menu_lines:
+            # Detect station headers
+            if any(keyword in line.lower() for keyword in ['express meals', 'true balance', 'vegan meal', 'all day breakfast', 'entrees', 'station']):
+                current_station = line
+                if current_station not in menu_data['stations']:
+                    menu_data['stations'].append(current_station)
+                continue
+            
+            # Skip lines that are probably not food items
+            if len(line) < 5 or any(keyword in line.lower() for keyword in ['select dining', 'pick a day', 'pick a meal', 'remember to']):
+                continue
+            
+            # Extract food items with calories
+            item_data = parse_food_item(line, current_station)
+            if item_data:
+                if 'express' in current_station.lower() or 'cash' in line.lower():
+                    menu_data['express_meals'].append(item_data)
+                else:
+                    menu_data['items'].append(item_data)
+        
+        # Also try to find items by specific selectors
+        try:
+            menu_items = driver.find_elements(By.CLASS_NAME, "menu-item")
+            for item in menu_items:
+                text = item.text.strip()
+                if text:
+                    item_data = parse_food_item(text, current_station)
+                    if item_data:
+                        menu_data['items'].append(item_data)
+        except:
+            pass
+            
+    except Exception as e:
+        print(f"Error extracting menu content: {e}")
+    
+    return menu_data
+
+def parse_food_item(text, station=""):
+    """Parse food item text into structured data"""
+    try:
+        # Clean the text
+        text = re.sub(r'\s+', ' ', text.strip())
+        
+        # Skip if it's too short or doesn't look like a food item
+        if len(text) < 5 or any(keyword in text.lower() for keyword in ['select', 'pick', 'remember', 'note:', 'tenders']):
+            return None
+        
+        # Extract calories
+        calories = None
+        calorie_match = re.search(r'\((\d+)\s*cal\)', text.lower())
+        if calorie_match:
+            calories = int(calorie_match.group(1))
+        
+        # Extract name (remove calorie part and other non-food text)
+        name = text
+        if calorie_match:
+            name = text.replace(calorie_match.group(0), '').strip()
+        
+        # Extract description (ingredients after the main name)
+        description = None
+        if ',' in name and len(name) > 20:
+            parts = name.split(',', 1)
+            name = parts[0].strip()
+            description = parts[1].strip()
+        
+        # Extract dietary tags
+        dietary_tags = []
+        tags = ['vegan', 'vegetarian', 'gluten-free', 'dairy-free', 'organic', 'local', 'halal']
+        for tag in tags:
+            if tag in text.lower():
+                dietary_tags.append(tag)
+        
+        return {
+            'name': name,
+            'calories': calories,
+            'description': description,
+            'station': station,
+            'dietary_tags': dietary_tags,
+            'full_text': text
+        }
+        
+    except Exception as e:
+        print(f"Error parsing food item: {e}")
+        return None
+
+def scrape_actual_menu(dining_hall, date, meal):
+    """Scrape the actual menu content after making selections"""
     driver = None
     try:
         driver = setup_stealth_driver()
         
-        print(f"Loading {dining_hall} menu for {day} - {meal}...")
+        print(f"Loading menu for {dining_hall} - {date} - {meal}...")
         driver.get("https://www.queensu.ca/food/eat-now/todays-menu")
         time.sleep(3)
         
-        # Handle cookie popup first
+        # Handle cookie popup
         handle_cookie_popup(driver)
         time.sleep(2)
         
-        # Select dining hall
-        print("Selecting dining hall...")
-        if not click_element_safely(driver, "dining hall", dining_hall):
-            print(f"Could not find dining hall: {dining_hall}")
-            # Take screenshot to see what's available
-            driver.save_screenshot("available_options.png")
-            print("Screenshot saved to available_options.png")
-            return {"error": f"Dining hall '{dining_hall}' not found"}
+        # Make selections in order
+        if not make_selection(driver, "dining_hall", dining_hall):
+            return {"error": f"Could not select dining hall: {dining_hall}"}
         
-        # Select date
-        print("Selecting date...")
-        date_part = day.split(',')[1].strip() if ',' in day else day
-        if not click_element_safely(driver, "date", date_part):
-            print(f"Could not find date: {date_part}")
+        if not make_selection(driver, "date", date):
+            return {"error": f"Could not select date: {date}"}
         
-        # Select meal
-        print("Selecting meal...")
-        if not click_element_safely(driver, "meal", meal):
-            print(f"Could not find meal: {meal}")
+        if not make_selection(driver, "meal", meal):
+            return {"error": f"Could not select meal: {meal}"}
         
         # Wait for menu to load
-        time.sleep(3)
+        if not wait_for_menu_load(driver):
+            print("Menu didn't load automatically, trying to proceed...")
         
-        # Extract detailed menu
-        menu_data = extract_detailed_menu(driver)
+        # Take screenshot to see current state
+        driver.save_screenshot("menu_loaded.png")
+        print("Screenshot saved: menu_loaded.png")
         
-        # Take screenshot
-        driver.save_screenshot("final_menu.png")
+        # Extract menu content
+        menu_data = extract_menu_content(driver)
         
         return {
             'success': True,
             'dining_hall': dining_hall,
-            'date': day,
+            'date': date,
             'meal': meal,
-            'menu': menu_data,
-            'screenshot': 'final_menu.png'
+            'menu_data': menu_data,
+            'screenshot': 'menu_loaded.png'
         }
         
     except Exception as e:
@@ -223,59 +310,77 @@ def scrape_complete_menu(dining_hall, day, meal):
         if driver:
             driver.quit()
 
-def print_detailed_menu(menu_result):
-    """Print the menu in a detailed, organized way"""
-    if 'error' in menu_result:
-        print(f"❌ Error: {menu_result['error']}")
+def print_menu_results(result):
+    """Print the menu results in a clean format"""
+    if 'error' in result:
+        print(f"❌ Error: {result['error']}")
         return
     
-    print(f"\n🍽️  {menu_result['dining_hall']} - {menu_result['date']} - {menu_result['meal']}")
-    print("=" * 70)
+    print(f"\n{'='*80}")
+    print(f"🍽️  MENU FOR: {result['dining_hall']} - {result['date']} - {result['meal']}")
+    print(f"{'='*80}")
     
-    menu_data = menu_result['menu']
+    menu_data = result['menu_data']
     
     # Print Express Meals
     if menu_data['express_meals']:
-        print("\n🚀 EXPRESS MEALS:")
-        print("-" * 40)
+        print(f"\n🚀 EXPRESS MEALS:")
+        print("-" * 50)
         for item in menu_data['express_meals']:
             calories = f" ({item['calories']} cal)" if item['calories'] else ""
             print(f"• {item['name']}{calories}")
             if item['description']:
                 print(f"  📝 {item['description']}")
+            if item['dietary_tags']:
+                print(f"  🏷️  {', '.join(item['dietary_tags'])}")
     
-    # Print Regular Menu
-    if menu_data['regular_menu']:
-        print(f"\n📋 MAIN MENU:")
-        print("-" * 40)
-        for item in menu_data['regular_menu']:
-            calories = f" ({item['calories']} cal)" if item['calories'] else ""
-            print(f"• {item['name']}{calories}")
-            if item['description']:
-                print(f"  📝 {item['description']}")
+    # Print Regular Menu Items by Station
+    if menu_data['items']:
+        # Group items by station
+        stations = {}
+        for item in menu_data['items']:
+            station = item.get('station', 'Other')
+            if station not in stations:
+                stations[station] = []
+            stations[station].append(item)
+        
+        for station, items in stations.items():
+            print(f"\n🏷️  {station.upper()}:")
+            print("-" * 50)
+            for item in items:
+                calories = f" ({item['calories']} cal)" if item['calories'] else ""
+                print(f"• {item['name']}{calories}")
+                if item['description']:
+                    print(f"  📝 {item['description']}")
+                if item['dietary_tags']:
+                    print(f"  🏷️  {', '.join(item['dietary_tags'])}")
     
-    print(f"\n📊 Total items found: {len(menu_data['express_meals']) + len(menu_data['regular_menu'])}")
-    print(f"📷 Screenshot saved to: {menu_result.get('screenshot', 'N/A')}")
+    # Print summary
+    print(f"\n📊 SUMMARY:")
+    print("-" * 50)
+    print(f"• Express meals: {len(menu_data['express_meals'])}")
+    print(f"• Regular items: {len(menu_data['items'])}")
+    print(f"• Stations: {len(menu_data['stations'])}")
+    print(f"• Screenshot: {result.get('screenshot', 'N/A')}")
 
 # Main execution
 if __name__ == "__main__":
     # Use current real date
-    current_date = datetime.now().strftime("%a, %b %d")  # e.g., "Fri, Sep 13"
+    current_date = datetime.now().strftime("%a, %b %d")  # e.g., "Sat, Sep 13"
     
-    print("Queens University Detailed Menu Scraper")
+    print("🚀 QUEENS UNIVERSITY MENU SCRAPER")
     print("=" * 50)
     
-    # Get user input
-    dining_hall = input("Enter dining hall (e.g., 'Ban Righ Hall', 'Leonard Hall'): ").strip() or "Leonard Hall"
-    meal = input("Enter meal (Breakfast/Lunch/Dinner): ").strip() or "Lunch"
+    dining_hall = input("Enter dining hall (e.g., 'Leonard Hall'): ").strip() or "Leonard Hall"
+    meal = input("Enter meal (Breakfast/Lunch/Dinner): ").strip() or "Dinner"
     
     print(f"\nScraping {dining_hall} for {current_date} - {meal}...")
     
-    result = scrape_complete_menu(dining_hall, current_date, meal)
-    print_detailed_menu(result)
+    result = scrape_actual_menu(dining_hall, current_date, meal)
+    print_menu_results(result)
     
-    # Save raw data to JSON file
-    if 'menu' in result:
-        with open('detailed_menu_data.json', 'w', encoding='utf-8') as f:
+    # Save data to JSON
+    if 'menu_data' in result:
+        with open('actual_menu_data.json', 'w', encoding='utf-8') as f:
             json.dump(result, f, indent=2, ensure_ascii=False)
-        print("\n💾 Raw data saved to 'detailed_menu_data.json'")
+        print(f"\n💾 Data saved to 'actual_menu_data.json'")
