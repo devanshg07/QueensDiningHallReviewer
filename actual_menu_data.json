@@ -1,8 +1,8 @@
 {
   "success": true,
   "dining_hall": "Leonard Hall",
-  "date": "Sat, Sep 13",
-  "meal": "Dinner",
+  "date": "Wed, Sep 17",
+  "meal": "Lunch",
   "menu_data": {
     "stations": [
       "Express Meals *Available at the cash",
@@ -73,38 +73,6 @@
         "full_text": "Leonard Hall"
       },
       {
-        "name": "Sat, Sep 13",
-        "calories": null,
-        "description": null,
-        "station": "",
-        "dietary_tags": [],
-        "full_text": "Sat, Sep 13"
-      },
-      {
-        "name": "Sun, Sep 14",
-        "calories": null,
-        "description": null,
-        "station": "",
-        "dietary_tags": [],
-        "full_text": "Sun, Sep 14"
-      },
-      {
-        "name": "Mon, Sep 15",
-        "calories": null,
-        "description": null,
-        "station": "",
-        "dietary_tags": [],
-        "full_text": "Mon, Sep 15"
-      },
-      {
-        "name": "Tue, Sep 16",
-        "calories": null,
-        "description": null,
-        "station": "",
-        "dietary_tags": [],
-        "full_text": "Tue, Sep 16"
-      },
-      {
         "name": "Wed, Sep 17",
         "calories": null,
         "description": null,
@@ -127,6 +95,38 @@
         "station": "",
         "dietary_tags": [],
         "full_text": "Fri, Sep 19"
+      },
+      {
+        "name": "Sat, Sep 20",
+        "calories": null,
+        "description": null,
+        "station": "",
+        "dietary_tags": [],
+        "full_text": "Sat, Sep 20"
+      },
+      {
+        "name": "Sun, Sep 21",
+        "calories": null,
+        "description": null,
+        "station": "",
+        "dietary_tags": [],
+        "full_text": "Sun, Sep 21"
+      },
+      {
+        "name": "Mon, Sep 22",
+        "calories": null,
+        "description": null,
+        "station": "",
+        "dietary_tags": [],
+        "full_text": "Mon, Sep 22"
+      },
+      {
+        "name": "Tue, Sep 23",
+        "calories": null,
+        "description": null,
+        "station": "",
+        "dietary_tags": [],
+        "full_text": "Tue, Sep 23"
       },
       {
         "name": "Breakfast",
@@ -161,76 +161,76 @@
         "full_text": "Scheduled Menu"
       },
       {
-        "name": "Beef Vindaloo",
-        "calories": 170,
+        "name": "Sweet & Sour Pork",
+        "calories": 250,
         "description": null,
         "station": "True Balance Meal",
         "dietary_tags": [],
-        "full_text": "Beef Vindaloo (170 cal)"
+        "full_text": "Sweet & Sour Pork (250 cal)"
       },
       {
-        "name": "vindaloo beef",
+        "name": "pork",
         "calories": null,
-        "description": "red onion, tomato",
+        "description": "pineapple, onion, green pepper, carrot, spices, sweet & sour sauce",
         "station": "True Balance Meal",
         "dietary_tags": [],
-        "full_text": "vindaloo beef, red onion, tomato"
+        "full_text": "pork, pineapple, onion, green pepper, carrot, spices, sweet & sour sauce"
       },
       {
-        "name": "Middle Eastern Chickpeas",
-        "calories": 140,
+        "name": "Sweet Potato Chickpea Bowl",
+        "calories": 310,
         "description": null,
         "station": "True Balance Meal",
         "dietary_tags": [],
-        "full_text": "Middle Eastern Chickpeas (140 cal)"
+        "full_text": "Sweet Potato Chickpea Bowl (310 cal)"
       },
       {
-        "name": "chickpeas",
+        "name": "sweet potato",
         "calories": null,
-        "description": "spinach, red pepper, onion",
+        "description": "moroccan-spiced chickpeas, spinach, kale, brown rice",
         "station": "True Balance Meal",
         "dietary_tags": [],
-        "full_text": "chickpeas, spinach, red pepper, onion"
+        "full_text": "sweet potato, moroccan-spiced chickpeas, spinach, kale, brown rice"
       },
       {
-        "name": "Aromatic Basmati Rice",
-        "calories": 120,
-        "description": null,
-        "station": "True Balance Meal",
-        "dietary_tags": [],
-        "full_text": "Aromatic Basmati Rice (120 cal)"
-      },
-      {
-        "name": "Broccoli",
-        "calories": 35,
+        "name": "Herb Rice",
+        "calories": 130,
         "description": null,
         "station": "True Balance Meal",
         "dietary_tags": [],
-        "full_text": "Broccoli (35 cal)"
+        "full_text": "Herb Rice (130 cal)"
       },
       {
-        "name": "Bok Choy",
-        "calories": 40,
+        "name": "Roasted Acorn Squash",
+        "calories": 45,
+        "description": null,
+        "station": "True Balance Meal",
+        "dietary_tags": [],
+        "full_text": "Roasted Acorn Squash (45 cal)"
+      },
+      {
+        "name": "Mushroom Stroganoff Linguine",
+        "calories": 290,
         "description": null,
         "station": "Vegan Meal",
         "dietary_tags": [],
-        "full_text": "Bok Choy (40 cal)"
+        "full_text": "Mushroom Stroganoff Linguine (290 cal)"
       },
       {
-        "name": "Korean BBQ Tofu",
-        "calories": 160,
+        "name": "Broccoli Florets",
+        "calories": 30,
         "description": null,
         "station": "Vegan Meal",
         "dietary_tags": [],
-        "full_text": "Korean BBQ Tofu (160 cal)"
+        "full_text": "Broccoli Florets (30 cal)"
       },
       {
-        "name": "Brown Rice",
-        "calories": 120,
+        "name": "Rosemary Potato Wedges",
+        "calories": 110,
         "description": null,
         "station": "Vegan Meal",
         "dietary_tags": [],
-        "full_text": "Brown Rice (120 cal)"
+        "full_text": "Rosemary Potato Wedges (110 cal)"
       },
       {
         "name": "Entrées",
@@ -337,20 +337,20 @@
         "full_text": "Sides"
       },
       {
-        "name": "Frizzled Ham",
-        "calories": 40,
+        "name": "Breakfast Sausage Patty",
+        "calories": 150,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "Frizzled Ham (40 cal)"
+        "full_text": "Breakfast Sausage Patty (150 cal)"
       },
       {
-        "name": "Potato Wedges",
-        "calories": 130,
+        "name": "Home Fried Potatoes",
+        "calories": 150,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "Potato Wedges (130 cal)"
+        "full_text": "Home Fried Potatoes (150 cal)"
       },
       {
         "name": "Entrée",
@@ -369,12 +369,12 @@
         "full_text": "Entrées"
       },
       {
-        "name": "PORK",
-        "calories": 180,
-        "description": "LOIN, ROASTED, FENNEL, PAPRIKA RES",
+        "name": "Beef Masala",
+        "calories": 150,
+        "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "PORK, LOIN, ROASTED, FENNEL, PAPRIKA RES (180 cal)"
+        "full_text": "Beef Masala (150 cal)"
       },
       {
         "name": "Sides",
@@ -385,20 +385,28 @@
         "full_text": "Sides"
       },
       {
-        "name": "Broccoli Florets",
-        "calories": 30,
+        "name": "Basmati Rice",
+        "calories": 110,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "Broccoli Florets (30 cal)"
+        "full_text": "Basmati Rice (110 cal)"
       },
       {
-        "name": "Cajun Red Potatoes",
-        "calories": 130,
+        "name": "Sunrise Vegetable Medley",
+        "calories": 50,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "Cajun Red Potatoes (130 cal)"
+        "full_text": "Sunrise Vegetable Medley (50 cal)"
+      },
+      {
+        "name": "green beans",
+        "calories": null,
+        "description": "orange & yellow carrots",
+        "station": "All Day Breakfast",
+        "dietary_tags": [],
+        "full_text": "green beans, orange & yellow carrots"
       },
       {
         "name": "Cold Sandwiches",
@@ -409,36 +417,36 @@
         "full_text": "Cold Sandwiches"
       },
       {
-        "name": "BLT Wrap",
+        "name": "Goat Cheese & Vegetable Baguette",
         "calories": 250,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "BLT Wrap (250 cal)"
+        "full_text": "Goat Cheese & Vegetable Baguette (250 cal)"
       },
       {
-        "name": "bacon",
+        "name": "mushroom",
         "calories": null,
-        "description": "lettuce, tomato, mayo, tortilla",
+        "description": "caramelized onion, spinach, zucchini, sundried tomato goat cheese",
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "bacon, lettuce, tomato, mayo, tortilla"
+        "full_text": "mushroom, caramelized onion, spinach, zucchini, sundried tomato goat cheese"
       },
       {
-        "name": "Tofu Banh Mi Baguette",
-        "calories": 280,
+        "name": "Turkey Cranberry Wrap",
+        "calories": 520,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "Tofu Banh Mi Baguette (280 cal)"
+        "full_text": "Turkey Cranberry Wrap (520 cal)"
       },
       {
-        "name": "tofu",
+        "name": "turkey",
         "calories": null,
-        "description": "daikon radish slaw, coconut tahini sauce, cucumber",
+        "description": "lettuce, tomato, mozzarella, cranberry sauce, tortilla",
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "tofu, daikon radish slaw, coconut tahini sauce, cucumber"
+        "full_text": "turkey, lettuce, tomato, mozzarella, cranberry sauce, tortilla"
       },
       {
         "name": "Grill",
@@ -449,36 +457,28 @@
         "full_text": "Grill"
       },
       {
-        "name": "Hot Sandwiches",
+        "name": "Entrées",
         "calories": null,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "Hot Sandwiches"
+        "full_text": "Entrées"
       },
       {
-        "name": "Southwest Veggie Burger",
-        "calories": 450,
+        "name": "Pom Pom Nachos",
+        "calories": 150,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "Southwest Veggie Burger (450 cal)"
+        "full_text": "Pom Pom Nachos (150 cal)"
       },
       {
-        "name": "malibu burger patty",
+        "name": "jalapeno cheese sauce",
         "calories": null,
-        "description": "pico de gallo, guacamole, lettuce, sesame seed bun",
+        "description": "salsa, sour cream, pom pom potatoes",
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "malibu burger patty, pico de gallo, guacamole, lettuce, sesame seed bun"
-      },
-      {
-        "name": "The Original Burger",
-        "calories": 530,
-        "description": null,
-        "station": "All Day Breakfast",
-        "dietary_tags": [],
-        "full_text": "The Original Burger (530 cal)"
+        "full_text": "jalapeno cheese sauce, salsa, sour cream, pom pom potatoes"
       },
       {
         "name": "Sides",
@@ -489,12 +489,20 @@
         "full_text": "Sides"
       },
       {
-        "name": "French Fries",
-        "calories": 440,
+        "name": "Buffalo Chicken Totchos",
+        "calories": 160,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "French Fries (440 cal)"
+        "full_text": "Buffalo Chicken Totchos (160 cal)"
+      },
+      {
+        "name": "potato pom poms",
+        "calories": null,
+        "description": "chicken breast, green onion, blue cheese dressing, buffalo hot sauce",
+        "station": "All Day Breakfast",
+        "dietary_tags": [],
+        "full_text": "potato pom poms, chicken breast, green onion, blue cheese dressing, buffalo hot sauce"
       },
       {
         "name": "Sizzle",
@@ -513,36 +521,20 @@
         "full_text": "Entrées"
       },
       {
-        "name": "Korean Beef Stir Fry",
-        "calories": 160,
+        "name": "Butter Chicken",
+        "calories": 110,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "Korean Beef Stir Fry (160 cal)"
+        "full_text": "Butter Chicken (110 cal)"
       },
       {
-        "name": "marinated beef",
-        "calories": null,
-        "description": "onion, carrot, broccoli, sesame seeds, korean soy sauce",
-        "station": "All Day Breakfast",
-        "dietary_tags": [],
-        "full_text": "marinated beef, onion, carrot, broccoli, sesame seeds, korean soy sauce"
-      },
-      {
-        "name": "Thai Tofu Stir Fry",
-        "calories": 150,
+        "name": "Butter Chickpeas",
+        "calories": 190,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "Thai Tofu Stir Fry (150 cal)"
-      },
-      {
-        "name": "tofu",
-        "calories": null,
-        "description": "onion, carrot, snow peas, green pepper, cabbage, sweet and spicy sauce, soy sauce, green onion",
-        "station": "All Day Breakfast",
-        "dietary_tags": [],
-        "full_text": "tofu, onion, carrot, snow peas, green pepper, cabbage, sweet and spicy sauce, soy sauce, green onion"
+        "full_text": "Butter Chickpeas (190 cal)"
       },
       {
         "name": "Sides",
@@ -553,12 +545,12 @@
         "full_text": "Sides"
       },
       {
-        "name": "White Rice",
+        "name": "Basmati Rice",
         "calories": 110,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "White Rice (110 cal)"
+        "full_text": "Basmati Rice (110 cal)"
       },
       {
         "name": "Salads",
@@ -577,36 +569,36 @@
         "full_text": "Salads"
       },
       {
-        "name": "Superfood Sweet Potato Salad (1000 gram)",
+        "name": "Greek-style Grain Salad (1000 gram)",
         "calories": 1330,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "Superfood Sweet Potato Salad (1000 gram) (1330 cal)"
+        "full_text": "Greek-style Grain Salad (1000 gram) (1330 cal)"
       },
       {
-        "name": "quinoa",
+        "name": "chickpeas",
         "calories": null,
-        "description": "sweet potatoes, carrot, broccoli, arugula, green onion, dried cranberries, tahini lemon vinaigrette",
+        "description": "brown rice, cucumber, red pepper, green onion, fresh parsley, fresh dill, greek vinaigrette",
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "quinoa, sweet potatoes, carrot, broccoli, arugula, green onion, dried cranberries, tahini lemon vinaigrette"
+        "full_text": "chickpeas, brown rice, cucumber, red pepper, green onion, fresh parsley, fresh dill, greek vinaigrette"
       },
       {
-        "name": "Tabbouleh (1000 gram)",
-        "calories": 1230,
+        "name": "Mediterranean Chickpea Salad (1 kilogram)",
+        "calories": 1340,
         "description": null,
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "Tabbouleh (1000 gram) (1230 cal)"
+        "full_text": "Mediterranean Chickpea Salad (1 kilogram) (1340 cal)"
       },
       {
-        "name": "bulgur",
+        "name": "chickpeas",
         "calories": null,
-        "description": "tomato, fresh parsley, fresh mint, green onion, lemon vinaigrette",
+        "description": "celery, green onion, red pepper, tomato, fresh parsley, capers, tahini lemon garlic vinaigrette",
         "station": "All Day Breakfast",
         "dietary_tags": [],
-        "full_text": "bulgur, tomato, fresh parsley, fresh mint, green onion, lemon vinaigrette"
+        "full_text": "chickpeas, celery, green onion, red pepper, tomato, fresh parsley, capers, tahini lemon garlic vinaigrette"
       },
       {
         "name": "Entrées",
@@ -617,20 +609,12 @@
         "full_text": "Entrées"
       },
       {
-        "name": "Carbonara Baked Rigatoni",
-        "calories": 460,
+        "name": "Vegetable Marinara Penne",
+        "calories": 230,
         "description": null,
         "station": "Pasta Station",
         "dietary_tags": [],
-        "full_text": "Carbonara Baked Rigatoni (460 cal)"
-      },
-      {
-        "name": "bacon",
-        "calories": null,
-        "description": "egg, peas, lemon cream sauce, rigatoni",
-        "station": "Pasta Station",
-        "dietary_tags": [],
-        "full_text": "bacon, egg, peas, lemon cream sauce, rigatoni"
+        "full_text": "Vegetable Marinara Penne (230 cal)"
       },
       {
         "name": "Pizza",
@@ -657,28 +641,28 @@
         "full_text": "Cheese Pizza (150 cal)"
       },
       {
+        "name": "Greek Naan Pizza",
+        "calories": 260,
+        "description": null,
+        "station": "Pasta Station",
+        "dietary_tags": [],
+        "full_text": "Greek Naan Pizza (260 cal)"
+      },
+      {
+        "name": "red onion",
+        "calories": null,
+        "description": "tomato, oregano, feta, mozzarella, naan flatbread",
+        "station": "Pasta Station",
+        "dietary_tags": [],
+        "full_text": "red onion, tomato, oregano, feta, mozzarella, naan flatbread"
+      },
+      {
         "name": "Pepperoni Pizza",
         "calories": 190,
         "description": null,
         "station": "Pasta Station",
         "dietary_tags": [],
         "full_text": "Pepperoni Pizza (190 cal)"
-      },
-      {
-        "name": "Spicy Sausage Pizza",
-        "calories": 180,
-        "description": null,
-        "station": "Pasta Station",
-        "dietary_tags": [],
-        "full_text": "Spicy Sausage Pizza (180 cal)"
-      },
-      {
-        "name": "sausage",
-        "calories": null,
-        "description": "red onion, banana peppers, chili pepper flakes, mozzarella, goat cheese",
-        "station": "Pasta Station",
-        "dietary_tags": [],
-        "full_text": "sausage, red onion, banana peppers, chili pepper flakes, mozzarella, goat cheese"
       },
       {
         "name": "Condiments",
@@ -689,20 +673,36 @@
         "full_text": "Condiments"
       },
       {
-        "name": "Butternut Squash Lentil Soup (8000 millilitre)",
-        "calories": 6740,
+        "name": "Cauliflower Cheddar Soup (8000 millilitre)",
+        "calories": 6890,
         "description": null,
         "station": "Soup Station",
         "dietary_tags": [],
-        "full_text": "Butternut Squash Lentil Soup (8000 millilitre) (6740 cal)"
+        "full_text": "Cauliflower Cheddar Soup (8000 millilitre) (6890 cal)"
       },
       {
-        "name": "Garlic Bread Soup (8000 millilitre)",
-        "calories": 5860,
+        "name": "A thick and delicious cheese soup with onions and cauliflower florets.",
+        "calories": null,
         "description": null,
         "station": "Soup Station",
         "dietary_tags": [],
-        "full_text": "Garlic Bread Soup (8000 millilitre) (5860 cal)"
+        "full_text": "A thick and delicious cheese soup with onions and cauliflower florets."
+      },
+      {
+        "name": "No Gluten Hearty Bean Soup (8000 millilitre)",
+        "calories": 3020,
+        "description": null,
+        "station": "Soup Station",
+        "dietary_tags": [],
+        "full_text": "No Gluten Hearty Bean Soup (8000 millilitre) (3020 cal)"
+      },
+      {
+        "name": "A satisfying plant-based soup loaded with navy and kidney beans",
+        "calories": null,
+        "description": "split peas and lentils.",
+        "station": "Soup Station",
+        "dietary_tags": [],
+        "full_text": "A satisfying plant-based soup loaded with navy and kidney beans, split peas and lentils."
       },
       {
         "name": "Entrées",
@@ -713,20 +713,20 @@
         "full_text": "Entrées"
       },
       {
-        "name": "Turkey Chili (118 millilitre)",
-        "calories": 110,
+        "name": "Southwestern Turkey Chili (118 millilitre)",
+        "calories": 100,
         "description": null,
         "station": "Soup Station",
         "dietary_tags": [],
-        "full_text": "Turkey Chili (118 millilitre) (110 cal)"
+        "full_text": "Southwestern Turkey Chili (118 millilitre) (100 cal)"
       },
       {
-        "name": "ground turkey",
+        "name": "lentils",
         "calories": null,
-        "description": "kidney beans, black beans, chickpeas, corn, zucchini, onion, celery, carrot, green pepper, spices, tomato",
+        "description": "kidney beans, chickpeas, navy beans, ground turkey, tomato, onion, celery, carrot, corn, green pepper, mushroom, cilantro",
         "station": "Soup Station",
         "dietary_tags": [],
-        "full_text": "ground turkey, kidney beans, black beans, chickpeas, corn, zucchini, onion, celery, carrot, green pepper, spices, tomato"
+        "full_text": "lentils, kidney beans, chickpeas, navy beans, ground turkey, tomato, onion, celery, carrot, corn, green pepper, mushroom, cilantro"
       },
       {
         "name": "Entrées",
@@ -737,36 +737,36 @@
         "full_text": "Entrées"
       },
       {
-        "name": "Beef Vindaloo",
-        "calories": 170,
+        "name": "Sweet & Sour Pork",
+        "calories": 250,
         "description": null,
         "station": "True Balance",
         "dietary_tags": [],
-        "full_text": "Beef Vindaloo (170 cal)"
+        "full_text": "Sweet & Sour Pork (250 cal)"
       },
       {
-        "name": "vindaloo beef",
+        "name": "pork",
         "calories": null,
-        "description": "red onion, tomato",
+        "description": "pineapple, onion, green pepper, carrot, spices, sweet & sour sauce",
         "station": "True Balance",
         "dietary_tags": [],
-        "full_text": "vindaloo beef, red onion, tomato"
+        "full_text": "pork, pineapple, onion, green pepper, carrot, spices, sweet & sour sauce"
       },
       {
-        "name": "Middle Eastern Chickpeas",
-        "calories": 140,
+        "name": "Sweet Potato Chickpea Bowl",
+        "calories": 310,
         "description": null,
         "station": "True Balance",
         "dietary_tags": [],
-        "full_text": "Middle Eastern Chickpeas (140 cal)"
+        "full_text": "Sweet Potato Chickpea Bowl (310 cal)"
       },
       {
-        "name": "chickpeas",
+        "name": "sweet potato",
         "calories": null,
-        "description": "spinach, red pepper, onion",
+        "description": "moroccan-spiced chickpeas, spinach, kale, brown rice",
         "station": "True Balance",
         "dietary_tags": [],
-        "full_text": "chickpeas, spinach, red pepper, onion"
+        "full_text": "sweet potato, moroccan-spiced chickpeas, spinach, kale, brown rice"
       },
       {
         "name": "Sides",
@@ -777,20 +777,20 @@
         "full_text": "Sides"
       },
       {
-        "name": "Aromatic Basmati Rice",
-        "calories": 120,
+        "name": "Herb Rice",
+        "calories": 130,
         "description": null,
         "station": "True Balance",
         "dietary_tags": [],
-        "full_text": "Aromatic Basmati Rice (120 cal)"
+        "full_text": "Herb Rice (130 cal)"
       },
       {
-        "name": "Broccoli",
-        "calories": 35,
+        "name": "Roasted Acorn Squash",
+        "calories": 45,
         "description": null,
         "station": "True Balance",
         "dietary_tags": [],
-        "full_text": "Broccoli (35 cal)"
+        "full_text": "Roasted Acorn Squash (45 cal)"
       },
       {
         "name": "Vegan",
@@ -811,20 +811,12 @@
         "full_text": "Entrées"
       },
       {
-        "name": "Bok Choy",
-        "calories": 40,
+        "name": "Mushroom Stroganoff Linguine",
+        "calories": 290,
         "description": null,
         "station": "True Balance",
         "dietary_tags": [],
-        "full_text": "Bok Choy (40 cal)"
-      },
-      {
-        "name": "Korean BBQ Tofu",
-        "calories": 160,
-        "description": null,
-        "station": "True Balance",
-        "dietary_tags": [],
-        "full_text": "Korean BBQ Tofu (160 cal)"
+        "full_text": "Mushroom Stroganoff Linguine (290 cal)"
       },
       {
         "name": "Sides",
@@ -835,12 +827,20 @@
         "full_text": "Sides"
       },
       {
-        "name": "Brown Rice",
-        "calories": 120,
+        "name": "Broccoli Florets",
+        "calories": 30,
         "description": null,
         "station": "True Balance",
         "dietary_tags": [],
-        "full_text": "Brown Rice (120 cal)"
+        "full_text": "Broccoli Florets (30 cal)"
+      },
+      {
+        "name": "Rosemary Potato Wedges",
+        "calories": 110,
+        "description": null,
+        "station": "True Balance",
+        "dietary_tags": [],
+        "full_text": "Rosemary Potato Wedges (110 cal)"
       },
       {
         "name": "Dining halls are dine-in only. Take-out containers are not permitted for use in the dining halls. For those requesting accommodation with allergy/other dietary needs please book an appointment with the Registered Dietitian or call 613-533-2953.",
@@ -893,28 +893,36 @@
         "full_text": "Entrée Meal"
       },
       {
-        "name": "PORK",
-        "calories": 180,
-        "description": "LOIN, ROASTED, FENNEL, PAPRIKA RES",
-        "station": "Express Meals *Available at the cash",
-        "dietary_tags": [],
-        "full_text": "PORK, LOIN, ROASTED, FENNEL, PAPRIKA RES (180 cal)"
-      },
-      {
-        "name": "Broccoli Florets",
-        "calories": 30,
+        "name": "Beef Masala",
+        "calories": 150,
         "description": null,
         "station": "Express Meals *Available at the cash",
         "dietary_tags": [],
-        "full_text": "Broccoli Florets (30 cal)"
+        "full_text": "Beef Masala (150 cal)"
       },
       {
-        "name": "Cajun Red Potatoes",
-        "calories": 130,
+        "name": "Basmati Rice",
+        "calories": 110,
         "description": null,
         "station": "Express Meals *Available at the cash",
         "dietary_tags": [],
-        "full_text": "Cajun Red Potatoes (130 cal)"
+        "full_text": "Basmati Rice (110 cal)"
+      },
+      {
+        "name": "Sunrise Vegetable Medley",
+        "calories": 50,
+        "description": null,
+        "station": "Express Meals *Available at the cash",
+        "dietary_tags": [],
+        "full_text": "Sunrise Vegetable Medley (50 cal)"
+      },
+      {
+        "name": "green beans",
+        "calories": null,
+        "description": "orange & yellow carrots",
+        "station": "Express Meals *Available at the cash",
+        "dietary_tags": [],
+        "full_text": "green beans, orange & yellow carrots"
       }
     ],
     "nutritional_info": []
